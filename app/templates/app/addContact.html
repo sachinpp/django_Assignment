@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+{% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+      {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.js' %}"></script>
+
+<script>
+    function goTOContactList() {
+        window.location = "http://localhost:56320/contact";
+    }
+
+</script>
+</head>
+
+
+<body>
+   <div class="container">
+       <div class="col-md-offset-2 col-md-7">
+            <div class="panel panel-default">
+            <div class="panel-heading">{{action}} <span onclick="goTOContactList()"style="float:right" class="glyphicon glyphicon-remove"></span></div>
+            <div class="panel-body">
+                <form action="{% url 'addContact' %}" method="post" class="form-horizontal" style="align-content:center">
+                    {% csrf_token %}
+                           <div class="form-group">
+                                {{ form.id }}
+
+                                    <label for="id_username" class="col-md-2 control-label">First Name</label>
+                                    <div class="col-md-10">
+                                        {{ form.FirstName }}
+                          </div>
+                          </div> <div class="form-group">
+                                        <label for="id_username" class="col-md-2 control-label">Last Name</label>
+                                        <div class="col-md-10">
+                                            {{  form.LastName }}
+                                        </div>
+                          </div>
+                          <div class="form-group">
+                                    <label for="id_username" class="col-md-2 control-label">Email</label>
+                                    <div class="col-md-10">
+                                        {{  form.Email }}
+                                    </div>
+                         </div>
+                         <div class="form-group">
+                                    <label for="id_username" class="col-md-2 control-label">Mobile</label>
+                                    <div class="col-md-10">
+                                        {{  form.Mobile }}
+                                    </div>
+                        </div>
+                        <div class="form-group">
+                                    <div class="col-md-offset-5 col-md-10 ">
+                                        <input type="submit" value="Save" class="btn btn-sm btn-success" />
+                                        <input type="button"onclick="goTOContactList()" value="Cancel" class="btn btn-sm btn-default" />
+                                    </div>
+                            
+                       </div>
+                </form>
+
+            </div>
+          </div>
+      </div>
+   </div>  
+</body>
+{% endblock %}
+</html>

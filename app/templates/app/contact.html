@@ -1,0 +1,153 @@
+
+   {% block content %}	
+   {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.js' %}"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+        var url = new URL(document.URL);
+        var pageSize = url.searchParams.get("pageSize");
+        if (pageSize) {
+            $("#pagesize").val(pageSize);
+        }
+        var key = url.searchParams.get("keyword");
+        if(key)
+            $("#myInput").val(key);
+    });
+    
+    //function myFunction() {
+    //    var input, filter, table, tr, td, i;
+    //    input = document.getElementById("myInput");
+    //    filter = input.value.toUpperCase();
+    //    table = document.getElementById("myTable");
+    //    tr = table.getElementsByTagName("tr");
+    //    for (i = 0; i < tr.length; i++) {
+    //        var found = false;
+    //        td = tr[i].getElementsByTagName("td");
+    //        if (td) {
+    //            for (j = 0; j < td.length-1; j++) {
+    //                if (td[j]) {
+    //                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+    //                        tr[i].style.display = "";
+    //                        found = true;
+    //                    }
+    //                }
+    //                if (found==false) {
+    //                        tr[i].style.display = "none";
+    //            }
+    //            }
+    //        }
+
+    //    }
+    //}
+
+
+    function queryRecords(pageNo){
+        var url="";
+
+        if(pageNo)
+            url += "contact?page=" + pageNo;
+        else
+            url += "contact?page=" + 1;
+
+        var pageSize = document.getElementById("pagesize").value;
+        if(pagesize)
+        url+= "&pageSize=" + pageSize;
+
+        keyword = document.getElementById("myInput").value;
+        if(keyword)
+            url+="&keyword=" + keyword
+
+        window.location = url;
+    }
+ 
+</script>
+
+
+<div class="container">        
+    <div class="row">
+            <div class="col-md-2" style="padding-left:0px" >
+                <div class="input-group">
+                  <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search">
+                  <span class="input-group-btn">
+                    <button class="btn btn-secondary " onclick="queryRecords()" type="button">Go!</button>
+                  </span>
+                </div>
+            </div>
+        <div class="col-md-10">
+        <button class="btn btn-primary" style="float:right" onclick="location.href='{% url 'addContact' %}';" >Create New </button><br/><br/>
+       </div>
+    </div>
+
+    <div class="row">
+      <table class="table table-hover table-bordered " id="myTable" >
+        <thead>
+          <tr>
+              <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+              <th>Mobile</th>
+               <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+          <tr>
+              <td>{{contact.id}}</td>
+            <td>{{contact.FirstName}}</td>
+           <td>{{contact.LastName}}</td>
+           <td>{{contact.Email}}</td>
+              <td>{{contact.Mobile}}</td>
+              <td width="15%">
+
+               <button type="button" onclick="location.href='{% url 'editContact' contact.id %}';" class="btn btn-success btn-sm">
+              <span class="glyphicon glyphicon-edit"></span> Edit
+            </button>
+
+              <button type="button"  onclick="location.href='{% url 'deleteContact' contact.id %}';" class="btn btn-danger btn-sm">
+              <span class="glyphicon glyphicon-trash"></span> Delete 
+            </button>
+                 </td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+        <b><span style="color:#428bca;">Total Contacts: </span></b>{{count}}
+        <div class="pagination" style="float:right">
+   
+        <span class="step-links" >
+            {% if contacts.has_previous %}
+                <a href="#" onclick="queryRecords({{ contacts.previous_page_number }})">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}
+            </span>
+
+            {% if contacts.has_next %}
+                <a href="#" onclick="queryRecords({{ contacts.next_page_number }})">Next</a>
+            {% endif %}
+             <select id="pagesize" onchange="pagesizechange()">
+                <option value="5" >5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+             </select>
+        </span>
+    </div>
+  </div>
+</div>
+	
+{% endblock %}

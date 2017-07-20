@@ -1,0 +1,7 @@
+F:\Python\DjangoWebProject\ContactManagerApp\bin\Microsoft.PythonTools.WebRole.dll
+F:\Python\DjangoWebProject\ContactManagerApp\bin\AzureSetup.cfg
+F:\Python\DjangoWebProject\ContactManagerApp\bin\Microsoft.PythonTools.AzureSetup.exe
+F:\Python\DjangoWebProject\ContactManagerApp\bin\Microsoft.PythonTools.AzureSetup.exe.config
+F:\Python\DjangoWebProject\ContactManagerApp\bin\wfastcgi.py
+F:\Python\DjangoWebProject\ContactManagerApp\obj\Release\web.config
+F:\Python\DjangoWebProject\ContactManagerApp\obj\Release\web.debug.config
